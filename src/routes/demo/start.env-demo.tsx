@@ -1,12 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
+import { useRuntimeConfig } from 'nitro/runtime-config';
 import { useState } from 'react';
 
 const getEnvVariable = createServerFn({
   method: 'GET',
 }).handler(async () => {
   console.log('GETTING ENV VAR', process.env);
-  const serverEnv = process.env.DEMO_ENV_VAR || 'Environment variable not set';
+  const config = useRuntimeConfig();
+  console.log('🚀 ~ config:', config.demoEnvVar);
+  const serverEnv = config.demoEnvVar || 'Environment variable not set';
   return serverEnv;
 });
 

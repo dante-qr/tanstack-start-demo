@@ -11,7 +11,12 @@ const config = defineConfig({
 		devtools(),
 		tsconfigPaths({ projects: ["./tsconfig.json"] }),
 		tailwindcss(),
-		nitro(),
+		nitro({
+			preset: "aws-amplify",
+			runtimeConfig: {
+				demoEnvVar: process.env.DEMO_ENV_VAR || "",
+			},
+		}),
 		tanstackStart(),
 		viteReact({
 			babel: {
@@ -19,6 +24,11 @@ const config = defineConfig({
 			},
 		}),
 	],
+	nitro: {
+		runtimeConfig: {
+			demoEnvVar: "awd",
+		},
+	},
 });
 
 export default config;
