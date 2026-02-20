@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import { devtools } from '@tanstack/devtools-vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
-
+import { nitro } from 'nitro/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 
 import viteReact from '@vitejs/plugin-react'
@@ -12,6 +12,9 @@ const config = defineConfig({
     devtools(),
     tsconfigPaths({ projects: ['./tsconfig.json'] }),
     tailwindcss(),
+    nitro({
+      preset: 'aws-amplify'
+    }),
     tanstackStart(),
     viteReact({
       babel: {
