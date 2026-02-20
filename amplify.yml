@@ -10,9 +10,6 @@ frontend:
         - echo "DEMO_ENV_VAR=$DEMO_ENV_VAR" >> .env
         - echo "VITE_APP_NAME=$VITE_APP_NAME" >> .env
 
-        - env | grep -e DEMO_ENV_VAR >> .env.production 
-        - env | grep -e VITE_APP_NAME >> .env.production 
-
         - npm install
     build:
       commands:

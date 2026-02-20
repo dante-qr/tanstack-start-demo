@@ -24,11 +24,6 @@ const config = defineConfig({
 			},
 		}),
 	],
-	nitro: {
-		runtimeConfig: {
-			demoEnvVar: "awd",
-		},
-	},
 });
 
 export default config;
