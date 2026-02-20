@@ -8,7 +8,7 @@ const getEnvVariable = createServerFn({
 }).handler(async () => {
   console.log('GETTING ENV VAR', process.env);
   const config = useRuntimeConfig();
-  console.log('🚀 ~ config:', config.demoEnvVar);
+  console.log('🚀 ~ config:', config);
   const serverEnv = config.demoEnvVar || 'Environment variable not set';
   return serverEnv;
 });
