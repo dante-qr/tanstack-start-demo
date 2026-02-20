@@ -11,9 +11,7 @@ const config = defineConfig({
 		devtools(),
 		tsconfigPaths({ projects: ["./tsconfig.json"] }),
 		tailwindcss(),
-		nitro({
-			preset: "aws-amplify",
-		}),
+		nitro(),
 		tanstackStart(),
 		viteReact({
 			babel: {
