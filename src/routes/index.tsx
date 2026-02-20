@@ -1,14 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router';
 import {
-  Zap,
-  Server,
   Route as RouteIcon,
+  Server,
   Shield,
-  Waves,
   Sparkles,
-} from 'lucide-react'
+  Waves,
+  Zap,
+} from 'lucide-react';
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute('/')({ component: App });
 
 function App() {
   const features = [
@@ -48,7 +48,7 @@ function App() {
       description:
         'Built from the ground up for modern web applications. Deploy anywhere JavaScript runs.',
     },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
@@ -99,7 +99,7 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <div
-              key={index}
+              key={feature.title}
               className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10"
             >
               <div className="mb-4">{feature.icon}</div>
@@ -114,5 +114,5 @@ function App() {
         </div>
       </section>
     </div>
-  )
+  );
 }
