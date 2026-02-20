@@ -3,12 +3,12 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install
-    build:
-      commands:
         - echo "DEMO_ENV_VAR=$DEMO_ENV_VAR" >> .env
         - echo "VITE_APP_NAME=$VITE_APP_NAME" >> .env
 
+        - npm install
+    build:
+      commands:
         - npm run build
   artifacts:
     baseDirectory: dist
