@@ -10,6 +10,13 @@ const getEnvVariable = createServerFn({
   return serverEnv;
 });
 
+const getEnvsVariable = createServerFn({
+  method: 'GET',
+}).handler(async () => {
+  console.log('GETTING ENV VAR', process.env);
+  return JSON.stringify(process.env);
+});
+
 export const Route = createFileRoute('/demo/start/env-demo')({
   component: Home,
   loader: async () => await getEnvVariable(),
@@ -18,6 +25,7 @@ export const Route = createFileRoute('/demo/start/env-demo')({
 function Home() {
   const originalServerEnv = Route.useLoaderData();
   const [serverEnv, setServerEnv] = useState(originalServerEnv);
+  const [allEnvs, setAllEnvs] = useState<string>('');
 
   // Client-side environment variable (only VITE_ prefixed are available)
   const clientEnv = import.meta.env.VITE_APP_NAME || 'Client env not set';
@@ -65,11 +73,26 @@ function Home() {
           >
             Refresh Server Environment Variable
           </button>
+          <button
+            type="button"
+            className="bg-green-500 hover:bg-green-600 disabled:bg-green-500/50 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg transition-colors"
+            onClick={async () => setAllEnvs(await getEnvsVariable())}
+          >
+            Get All Server Environment Variables
+          </button>
 
-          <div className="text-xs text-gray-500 mt-4">
-            Click the button to execute the server function and fetch the
-            environment variable securely. Notice how the client-side variable
-            is always available without a server call.
+          <div>
+            {allEnvs && (
+              <div className="bg-gray-800/50 p-4 rounded-lg mt-4">
+                <h2 className="text-lg font-semibold mb-2 text-yellow-400">
+                  All Server Environment Variables
+                </h2>
+
+                <pre className="text-xs text-gray-300">
+                  {JSON.stringify(JSON.parse(allEnvs), null, 2)}
+                </pre>
+              </div>
+            )}
           </div>
         </div>
       </div>
