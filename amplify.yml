@@ -7,8 +7,6 @@ frontend:
         - echo "DEMO_ENV_VAR=$DEMO_ENV_VAR"
         - echo "VITE_APP_NAME=$VITE_APP_NAME"
 
-        - printenv | grep NEXT_PUBLIC
-
         - echo "DEMO_ENV_VAR=$DEMO_ENV_VAR" >> .env
         - echo "VITE_APP_NAME=$VITE_APP_NAME" >> .env
 
