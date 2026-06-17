@@ -27,9 +27,10 @@ jobs:
               uses: anomalyco/opencode/github@latest
               env:
                   OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
               with:
                   model: ${{ secrets.OPENCODE_MODEL }}
-
+                  use_github_token: true
                   prompt: |
                       Eres un ingeniero de software senior colaborador de este repositorio. Siempre respondés en español.
                       Se acaba de abrir o editar la issue #${{ github.event.issue.number }}.
