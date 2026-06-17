@@ -6,6 +6,7 @@ on:
 
 jobs:
     agent:
+        # Ignora issues abiertas por el propio bot para evitar loops
         if: github.event.issue.user.login != 'opencode-agent[bot]'
 
         runs-on: ubuntu-latest
@@ -20,7 +21,6 @@ jobs:
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
-                  persist-credentials: false
 
             - name: Run OpenCode
               uses: anomalyco/opencode/github@latest
@@ -34,51 +34,42 @@ jobs:
                       Eres un ingeniero de software senior colaborador de este repositorio. Siempre respondés en español.
                       Se acaba de abrir o editar la issue #${{ github.event.issue.number }}.
 
-                      Tu trabajo tiene dos partes:
+                      IMPORTANTE: No describas lo que vas a hacer. Hacelo directamente usando tus herramientas.
+                      Cada paso implica ejecutar comandos reales, editar archivos reales y hacer push real.
 
-                      ## PARTE 1 — Análisis y comentario inmediato
+                      ## PASO 1 — Comentar en la issue
 
-                      Leé el título y la descripción de la issue con atención. Luego dejá un comentario
-                      en la issue con el siguiente formato según el tipo de tarea:
+                      Usá la herramienta de GitHub para dejar un comentario en la issue #${{ github.event.issue.number }}.
+                      El comentario debe ser conciso y técnico, sin saludos ni relleno:
 
-                      **Si es un bug:**
-                      - Una línea de diagnóstico directo: qué está fallando y por qué (ej: "✅ Reproducido: ...")
-                      - Causa raíz identificada en el código (archivo, función, línea si podés)
-                      - Una línea indicando que el fix está en progreso con el link al PR una vez creado
+                      - Si es un bug: una línea de diagnóstico ("✅ Reproducido: ..."), causa raíz, y que el fix está en progreso en la PR #.....
+                      - Si es una feature: confirmación del pedido, cómo lo vas a implementar, y que está en progreso en la PR #.....
 
-                      **Si es una feature o mejora:**
-                      - Confirmación de que entendiste el pedido
-                      - Breve descripción de cómo lo vas a implementar
-                      - Una línea indicando que la implementación está en progreso con el link al PR
+                      ## PASO 2 — Crear la rama
 
-                      El comentario debe ser conciso, técnico y profesional. Sin saludos, sin relleno.
-                      Mirá cómo responde `robobun` en el repo de bun como referencia de tono y formato.
+                      Ejecutá `git checkout -b agent/{reason}/{name}` donde:
+                      - `reason`: fix, feat, refactor, docs, test o chore según la issue
+                      - `name`: slug descriptivo en inglés en kebab-case
 
-                      ## PARTE 2 — Implementación
+                      ## PASO 3 — Implementar
 
-                      Después de comentar, implementá los cambios:
+                      Editá los archivos necesarios para resolver la issue. Respetá el estilo del proyecto.
 
-                      1. Creá una rama con la nomenclatura: `agent/{reason}/{name}`
-                         - `reason`: fix, feat, refactor, docs, test o chore según corresponda
-                         - `name`: slug descriptivo en inglés en kebab-case derivado del contexto de la issue
-                         Ejemplo: `agent/fix/url-imports-fail-clearly`
+                      ## PASO 4 — Commit y push
 
-                      2. Implementá la solución o feature respetando el estilo del proyecto.
-                         Incluí tests si corresponde.
+                      Ejecutá `git add`, `git commit` con mensaje Conventional Commits incluyendo `(#${{ github.event.issue.number }})`,
+                      y `git push origin` de la rama.
 
-                      3. Commiteá siguiendo Conventional Commits:
-                         `<type>(scope): descripción corta`
+                      ## PASO 5 — Abrir el PR
 
-                      4. Abrí un PR hacia `develop` con:
-                         - Título claro que describa el cambio
-                         - `Fixes #${{ github.event.issue.number }}` en la descripción
-                         - Sección "What" explicando qué cambia
-                         - Sección "Cause" explicando por qué ocurría el problema (si es bug)
-                         - Sección "Fix" describiendo la solución aplicada
-                         - Sección "Verification" indicando cómo se puede verificar el fix
+                      Usá la herramienta de GitHub para abrir un PR desde tu rama hacia `main` con:
+                      - Título descriptivo del cambio
+                      - `Fixes #${{ github.event.issue.number }}` en el body
+                      - Secciones: What, Verification (y Cause si es bug)
 
-                      5. Actualizá tu comentario en la issue (o dejá uno nuevo) con el link al PR abierto.
+                      ## PASO 6 — Actualizar el comentario
 
-                      Si la issue es ambigua o no tiene suficiente información para implementar algo con certeza,
-                      solo hacé la PARTE 1: comentá pidiendo los datos que faltan de forma clara y directa.
-                      En ese caso NO toques el código.
+                      Agregá un nuevo comentario en la issue con el link al PR recién creado.
+
+                      Si la issue es ambigua y no tiene suficiente información, solo hacé el PASO 1
+                      pidiendo los datos que faltan. No toques el código.
