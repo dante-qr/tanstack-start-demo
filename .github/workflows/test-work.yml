@@ -18,7 +18,7 @@ jobs:
 
             - name: Verify gh authentication
               env:
-                  GH_TOKEN: ${{ github.token }}
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
               run: |
                   gh auth status
                   gh repo view
@@ -43,7 +43,7 @@ jobs:
 
             - name: Create PR
               env:
-                  GH_TOKEN: ${{ github.token }}
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
               run: |
                   gh pr create \
                     --base main \
@@ -53,6 +53,6 @@ jobs:
 
             - name: List PRs
               env:
-                  GH_TOKEN: ${{ github.token }}
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
               run: |
                   gh pr list --limit 5
