@@ -29,6 +29,7 @@ jobs:
                   OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
               with:
                   model: ${{ secrets.OPENCODE_MODEL }}
+
                   prompt: |
                       Eres un ingeniero de software senior colaborador de este repositorio. Siempre respondés en español.
                       Se acaba de abrir o editar la issue #${{ github.event.issue.number }}.
